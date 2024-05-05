@@ -31,7 +31,19 @@
 
   <script>
     function toggleSocket() {
-      alert("Zásuvka přepnuta!");
+      fetch('/toggleSocket') // Pošle HTTP GET požadavek na Arduino
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(data => {
+          alert(data); // Zobrazí odpověď z Arduina
+        })
+        .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+        });
     }
 
     function setTiming() {
